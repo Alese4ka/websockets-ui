@@ -1,6 +1,33 @@
-import * as fs from 'fs';
-import * as path from 'path';
-import * as http from 'http';
+import fs from 'fs';
+import path from 'path';
+import http from 'http';
+import WebSocket, { WebSocketServer } from 'ws';
+import { returnObjectToClient } from "../handle/handleClientMessage.js";
+import { db } from "../database/database.js";
+
+export const wss = new WebSocketServer({ port: 3000 });
+
+wss.on('connection', ws => {
+    console.log("new client connected");
+    // sending message to client
+    let data = {};
+    ws.on("message", data => {
+        console.log(1);
+        ws.send(returnObjectToClient(data));
+    });
+    
+    //on message from client
+    
+    // handling what to do when clients disconnects from server
+    ws.on("close", () => {
+        console.log("the client has connected");
+    });
+    // handling client connection error
+    ws.onerror = function () {
+        console.log("Some Error occurred")
+    }
+});
+console.log("The WebSocket server is running on port 3000");
 
 export const httpServer = http.createServer(function (req, res) {
     const __dirname = path.resolve(path.dirname(''));
