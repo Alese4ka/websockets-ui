@@ -1,16 +1,13 @@
 import fs from 'fs';
 import path from 'path';
 import http from 'http';
-import WebSocket, { WebSocketServer } from 'ws';
+import { WebSocketServer } from 'ws';
 import { returnObjectToClient } from "../handle/handleClientMessage.js";
-import { db } from "../database/database.js";
 
 export const wss = new WebSocketServer({ port: 3000 });
 
 wss.on('connection', ws => {
     console.log("new client connected");
-    // sending message to client
-    let data = {};
     ws.on("message", data => {
         console.log(1);
         ws.send(returnObjectToClient(data));
