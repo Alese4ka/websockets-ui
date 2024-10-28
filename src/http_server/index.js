@@ -7,19 +7,9 @@ import { returnObjectToClient } from "../handle/handleClientMessage.js";
 export const wss = new WebSocketServer({ port: 3000 });
 
 wss.on('connection', ws => {
-    console.log("new client connected");
     ws.on("message", data => {
-        console.log(1);
         ws.send(returnObjectToClient(data));
     });
-    
-    //on message from client
-    
-    // handling what to do when clients disconnects from server
-    ws.on("close", () => {
-        console.log("the client has connected");
-    });
-    // handling client connection error
     ws.onerror = function () {
         console.log("Some Error occurred")
     }

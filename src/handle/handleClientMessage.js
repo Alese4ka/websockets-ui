@@ -1,7 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import fs from 'node:fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
 
 let countAttack = 0;
 const uuid = uuidv4();
